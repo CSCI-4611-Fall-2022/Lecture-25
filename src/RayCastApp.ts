@@ -133,6 +133,16 @@ export class RayCastApp extends gfx.GfxApp
         if(event.button != 0)
             return;
 
-        
+        const deviceCoords = this.getNormalizedDeviceCoordinates(event.x, event.y);
+
+        const ray = new gfx.Ray();
+        ray.setPickRay(deviceCoords, this.camera);
+
+        const intersection = ray.intersectsSphere(this.pickMesh.boundingSphere);
+
+        if(intersection)
+        {
+            // do some stuff
+        }
     }
 }
