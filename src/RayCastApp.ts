@@ -17,6 +17,7 @@ export class RayCastApp extends gfx.GfxApp
     private boundsMesh: gfx.MeshInstance;
     private boundsMaterial: gfx.BoundingVolumeMaterial;
 
+    private pickRayLine: gfx.BoxMesh;
     private pickRayMarker: gfx.SphereMesh;
 
     private boundingVolumeMode: string;
@@ -33,6 +34,7 @@ export class RayCastApp extends gfx.GfxApp
         this.boundsMesh = new gfx.MeshInstance(this.pickMesh);
         this.boundsMaterial = new gfx.BoundingVolumeMaterial();
 
+        this.pickRayLine = new gfx.BoxMesh(0.005, 0.005, 1);
         this.pickRayMarker = new gfx.SphereMesh(0.04, 2);
 
         this.boundingVolumeMode = 'None';
@@ -89,6 +91,11 @@ export class RayCastApp extends gfx.GfxApp
         this.pickRayMarker.material.setColor(new gfx.Color(0, 1, 1));
         this.pickRayMarker.visible = false;
         this.scene.add(this.pickRayMarker);
+
+        this.pickRayLine.material = new gfx.UnlitMaterial();
+        this.pickRayLine.material.setColor(new gfx.Color(1, 0, 1));
+        this.pickRayLine.visible = false;
+        this.scene.add(this.pickRayLine);
 
         this.createGUI();
     }
@@ -153,9 +160,19 @@ export class RayCastApp extends gfx.GfxApp
         {
             this.pickRayMarker.visible = true;
             this.pickRayMarker.position.copy(intersection);
+
+            this.pickRayLine.visible = true;
+            this.pickRayLine.position.copy(this.camera.position);
+            this.pickRayLine.position.y -= 0.05;
+            this.pickRayLine.lookAt(intersection);
+
+            const distance = this.pickRayLine.position.distanceTo(intersection);
+            this.pickRayLine.translateZ(-distance/2);
+            this.pickRayLine.scale.z = distance;
         }
         else
         {
+            this.pickRayLine.visible = false;
             this.pickRayMarker.visible = false;
         }
     }
