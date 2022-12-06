@@ -154,7 +154,12 @@ export class RayCastApp extends gfx.GfxApp
         const ray = new gfx.Ray();
         ray.setPickRay(deviceCoords, this.camera);
 
-        const intersection = ray.intersectsOrientedBoundingSphere(this.pickMesh);
+        let intersection: gfx.Vector3 | null = null;
+
+        if(this.raycastMode == 'Sphere')
+            intersection = ray.intersectsOrientedBoundingSphere(this.pickMesh);
+        else if(this.raycastMode == 'Box')
+            intersection = ray.intersectsOrientedBoundingBox(this.pickMesh);
 
         if(intersection)
         {
