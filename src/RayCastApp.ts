@@ -147,11 +147,16 @@ export class RayCastApp extends gfx.GfxApp
         const ray = new gfx.Ray();
         ray.setPickRay(deviceCoords, this.camera);
 
-        const intersection = ray.intersectsSphere(this.pickMesh.boundingSphere);
+        const intersection = ray.intersectsOrientedBoundingSphere(this.pickMesh);
 
         if(intersection)
         {
-            // do some stuff
+            this.pickRayMarker.visible = true;
+            this.pickRayMarker.position.copy(intersection);
+        }
+        else
+        {
+            this.pickRayMarker.visible = false;
         }
     }
 }
