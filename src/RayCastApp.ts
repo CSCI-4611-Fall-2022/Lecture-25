@@ -160,6 +160,8 @@ export class RayCastApp extends gfx.GfxApp
             intersection = ray.intersectsOrientedBoundingSphere(this.pickMesh);
         else if(this.raycastMode == 'Box')
             intersection = ray.intersectsOrientedBoundingBox(this.pickMesh);
+        else
+            intersection = ray.intersectsMesh(this.pickMesh);
 
         if(intersection)
         {
