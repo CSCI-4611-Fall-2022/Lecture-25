@@ -17,6 +17,8 @@ export class RayCastApp extends gfx.GfxApp
     private boundsMesh: gfx.MeshInstance;
     private boundsMaterial: gfx.BoundingVolumeMaterial;
 
+    private pickRayMarker: gfx.SphereMesh;
+
     private boundingVolumeMode: string;
     private raycastMode: string;
 
@@ -30,6 +32,8 @@ export class RayCastApp extends gfx.GfxApp
 
         this.boundsMesh = new gfx.MeshInstance(this.pickMesh);
         this.boundsMaterial = new gfx.BoundingVolumeMaterial();
+
+        this.pickRayMarker = new gfx.SphereMesh(0.04, 2);
 
         this.boundingVolumeMode = 'None';
         this.raycastMode = 'Box';
@@ -80,6 +84,11 @@ export class RayCastApp extends gfx.GfxApp
         this.boundsMesh.material = this.boundsMaterial;
         this.boundsMesh.visible = false;
         this.scene.add(this.boundsMesh);
+
+        this.pickRayMarker.material = new gfx.PhongMaterial();
+        this.pickRayMarker.material.setColor(new gfx.Color(0, 1, 1));
+        this.pickRayMarker.visible = false;
+        this.scene.add(this.pickRayMarker);
 
         this.createGUI();
     }
