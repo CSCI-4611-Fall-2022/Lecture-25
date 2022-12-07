@@ -179,11 +179,6 @@ export class RayCastApp extends gfx.GfxApp
             this.pickRayLine.scale.z = distance;
             return;
         }
-        else
-        {
-            this.pickRayLine.visible = false;
-            this.pickRayMarker.visible = false;
-        }
 
         const groundPlane = new gfx.Plane(gfx.Vector3.ZERO, gfx.Vector3.UP);
         const groundIntersection = ray.intersectsPlane(groundPlane);
@@ -202,5 +197,8 @@ export class RayCastApp extends gfx.GfxApp
             this.pickRayLine.scale.z = distance;
             return;
         }
+
+        this.pickRayLine.visible = false;
+        this.pickRayMarker.visible = false;
     }
 }
